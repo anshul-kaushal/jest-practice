@@ -56,15 +56,30 @@ describe('CookbookCli', () => {
     });
   });
 
-  
+
   describe('Adding recipe to the cookbook', () => {
-    test('should accept recipe name and ingredients and the change should be reflected in the object', () => {
+    test('should accept recipe name and ingredients and the change should be reflected in the actual object', () => {
       const myCookbook = new Cookbook();
       const myCookbookCli = new CookbookCli(myCookbook);
       
       myCookbookCli.run('add', 'chocolate cookies', ['butter', 'dough', 'chocolate']);
 
       const expectedRecipe = {'chocolate cookies': ['butter', 'dough', 'chocolate']};
+
+      expect(myCookbook.recipes).toEqual(expectedRecipe);
+    });
+  });
+
+  describe('Deleting recipe from the cookbook', () => {
+    test('should accept recipe name and the change should be reflected in the actual object', () => {
+      const myCookbook = new Cookbook();
+      const myCookbookCli = new CookbookCli(myCookbook);
+      
+      myCookbookCli.run('add', 'butterscotch cookies', ['butter', 'dough', 'butterscotch']);
+
+      myCookbookCli.run('remove', 'butterscotch cookies');
+
+      const expectedRecipe = {};
 
       expect(myCookbook.recipes).toEqual(expectedRecipe);
     });
