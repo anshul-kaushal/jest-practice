@@ -26,13 +26,25 @@ describe('Cookbook', () => {
 
   describe('Retrieving a recipe', () => {
     test('should allow the ingredients for a recipe to be retrieved', () => {
+      const myCookbook = new Cookbook();
+      myCookbook.addRecipe('veg burger', ['buns', 'lettuce']);
 
+      const expectedIngredients = ['buns', 'lettuce'];
+
+      expect(myCookbook.getRecipe('veg burger')).toEqual(expectedIngredients);
     });
   });
 
   describe('Deleting a recipe', () => {
     test('should allow a recipe to be deleted', () => {
+      const myCookbook = new Cookbook();
+      myCookbook.addRecipe('strawberry shake', ['strawberries', 'milk']);
+      myCookbook.removeRecipe('strawberry shake');
+      
 
+      const expectedRecipe = {}
+
+      expect(myCookbook.recipes).toEqual(expectedRecipe);
     });
   });
 });
