@@ -85,4 +85,20 @@ describe('CookbookCli', () => {
       expect(myCookbook.recipes).toEqual(expectedRecipe);
     });
   });
+
+  // stretch goals tests
+  describe('Adding same recipe twice', () => {
+    test('should not accept the same recipe name for the second time, and should display a message to indicate the same.', () => {
+      const myCookbook = new Cookbook();
+      const myCookbookCli = new CookbookCli(myCookbook);
+
+      myCookbookCli.run('add', 'fried rice', ['rice', 'vegetables']);
+
+
+      const message = `recipe for fried rice already exists`;
+
+      expect(myCookbookCli.run('add', 'fried rice', ['rice', 'vegetables'])).toBe(message);
+
+    })
+  })
 });
