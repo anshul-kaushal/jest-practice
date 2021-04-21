@@ -44,7 +44,15 @@ describe('CookbookCli', () => {
 
   describe('Deleting a recipe', () => {
     test('should accept the recipe name and display the correct message', () => {
+      const myCookbook = new Cookbook();
+      const myCookbookCli = new CookbookCli(myCookbook);
 
+      myCookbookCli.run('add', 'chips', ['potatoes', 'salt']);
+
+      const message = myCookbookCli.run('remove', 'chips');
+      const expectedMessage = `Successfully removed the following recipe: chips`;
+
+      expect(message).toBe(expectedMessage);
     });
   });
 });
