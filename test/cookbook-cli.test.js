@@ -56,9 +56,10 @@ describe('CookbookCli', () => {
     });
   });
 
+  // additional tests to ensure that CookbookCli is interacting properly with Cookbook. NOTE: this only includes add and remove because these two were the only functions that were returning messages that didn't refer to the cookbook object.
 
   describe('Adding recipe to the cookbook', () => {
-    test('should accept recipe name and ingredients and the change should be reflected in the actual object', () => {
+    test('should accept recipe name and ingredients and the change should be reflected in the cookbook object', () => {
       const myCookbook = new Cookbook();
       const myCookbookCli = new CookbookCli(myCookbook);
       
@@ -71,7 +72,7 @@ describe('CookbookCli', () => {
   });
 
   describe('Deleting recipe from the cookbook', () => {
-    test('should accept recipe name and the change should be reflected in the actual object', () => {
+    test('should accept recipe name and the change should be reflected in the cookbook object', () => {
       const myCookbook = new Cookbook();
       const myCookbookCli = new CookbookCli(myCookbook);
       
