@@ -30,7 +30,14 @@ class CookbookCli {
   }
 
   get(name) {
-    return `The ingredients for ${name} are: ${this.cookbook.getRecipe(name)}`;
+    const recipeIngredients = this.cookbook.getRecipe(name);
+    if(typeof recipeIngredients === 'undefined' || recipeIngredients === null){
+      return `recipe for ${name} doesn't exist in the cookbook. unable to retrieve the ingredients`
+    }
+    else{
+      return `The ingredients for ${name} are: ${recipeIngredients}`;
+    }
+    
   }
 
   remove(name) {

@@ -101,4 +101,16 @@ describe('CookbookCli', () => {
 
     })
   })
+
+  describe('Retrieving a recipe that does not exist', () => {
+    test('should accept the recipe name and return a suitable message if the provided recipe name does not exist in the cookbook', () => {
+      const myCookbook = new Cookbook();
+      const myCookbookCli = new CookbookCli(myCookbook);
+
+      const message = `recipe for meatballs doesn't exist in the cookbook. unable to retrieve the ingredients`;
+
+      expect(myCookbookCli.run('get', 'meatballs')).toBe(message);
+    })
+  })
+
 });
