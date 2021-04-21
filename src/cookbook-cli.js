@@ -9,7 +9,7 @@ class CookbookCli {
     switch (command) {
       case 'list': return this.list();
       case 'add': return this.add(...args);
-      case 'get': return this.get();
+      case 'get': return this.get(...args);
       case 'remove': return this.remove();
       default: return `Whoops, the following command is unsupported: ${command}.`;
     }
