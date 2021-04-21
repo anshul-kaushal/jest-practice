@@ -55,4 +55,18 @@ describe('CookbookCli', () => {
       expect(message).toBe(expectedMessage);
     });
   });
+
+  
+  describe('Adding recipe to the cookbook', () => {
+    test('should accept recipe name and ingredients and the change should be reflected in the object', () => {
+      const myCookbook = new Cookbook();
+      const myCookbookCli = new CookbookCli(myCookbook);
+      
+      myCookbookCli.run('add', 'chocolate cookies', ['butter', 'dough', 'chocolate']);
+
+      const expectedRecipe = {'chocolate cookies': ['butter', 'dough', 'chocolate']};
+
+      expect(myCookbook.recipes).toEqual(expectedRecipe);
+    });
+  });
 });
