@@ -16,6 +16,8 @@ class CookbookCli {
   }
 
   list() {
+    if(this.cookbook.listRecipes().length == 0) 
+    return 'You have no recipes in the cookbook currently.';
     return `You have the following recipes: ${this.cookbook.listRecipes().join(',')}`;
   }
 
@@ -31,7 +33,7 @@ class CookbookCli {
 
   get(name) {
     const recipeIngredients = this.cookbook.getRecipe(name);
-    if(typeof recipeIngredients === 'undefined' || recipeIngredients === null){
+    if(typeof recipeIngredients === 'undefined'){
       return `recipe for ${name} doesn't exist in the cookbook. unable to retrieve the ingredients`
     }
     else{
@@ -41,6 +43,9 @@ class CookbookCli {
   }
 
   remove(name) {
+    const recipeIngredients = this.cookbook.getRecipe(name);
+    if(typeof recipeIngredients === 'undefined')
+    return `recipe for ${name} doesn't exist in the cookbook`;
     this.cookbook.removeRecipe(name);
     return `Successfully removed the following recipe: ${name}`;
   }

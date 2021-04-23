@@ -12,6 +12,30 @@ describe('CookbookCli', () => {
 
       expect(message).toBe(expectedMessage);
     });
+
+    test('should accept recipe name and ingredients and the change should be reflected in the cookbook object', () => {
+      const myCookbook = new Cookbook();
+      const myCookbookCli = new CookbookCli(myCookbook);
+      
+      myCookbookCli.run('add', 'chocolate cookies', ['butter', 'dough', 'chocolate']);
+
+      const expectedRecipe = {'chocolate cookies': ['butter', 'dough', 'chocolate']};
+
+      expect(myCookbookCli.cookbook.recipes).toEqual(expectedRecipe);
+    });
+    
+    test('should not accept the same recipe name for the second time, and should display a message to indicate the same.', () => {
+      const myCookbook = new Cookbook();
+      const myCookbookCli = new CookbookCli(myCookbook);
+
+      myCookbookCli.run('add', 'fried rice', ['rice', 'vegetables']);
+
+
+      const message = `recipe for fried rice already exists`;
+
+      expect(myCookbookCli.run('add', 'fried rice', ['rice', 'vegetables'])).toBe(message);
+
+    })
   });
 
   describe('Listing recipes', () => {
@@ -23,6 +47,16 @@ describe('CookbookCli', () => {
 
       const message = myCookbookCli.run('list');
       const expectedMessage = `You have the following recipes: pepperoni pizza,cookies`;
+
+      expect(message).toBe(expectedMessage);
+    });
+
+    test('should display a warning message when cookbook includes no recipes', () => {
+      const myCookbook = new Cookbook();
+      const myCookbookCli = new CookbookCli(myCookbook);
+      
+      const message = myCookbookCli.run('list');
+      const expectedMessage = 'You have no recipes in the cookbook currently.';
 
       expect(message).toBe(expectedMessage);
     });
@@ -40,6 +74,16 @@ describe('CookbookCli', () => {
 
       expect(message).toBe(expectedMessage);
     });
+
+    test('should accept the recipe name and return a suitable message if the provided recipe name does not exist in the cookbook', () => {
+      const myCookbook = new Cookbook();
+      const myCookbookCli = new CookbookCli(myCookbook);
+
+      const message = `recipe for meatballs doesn't exist in the cookbook. unable to retrieve the ingredients`;
+
+
+      expect(myCookbookCli.run('get', 'meatballs')).toBe(message);
+    })
   });
 
   describe('Deleting a recipe', () => {
@@ -54,24 +98,7 @@ describe('CookbookCli', () => {
 
       expect(message).toBe(expectedMessage);
     });
-  });
 
-  // additional tests to ensure that CookbookCli is interacting properly with Cookbook. NOTE: this only includes add and remove because these two were the only functions that were returning messages that didn't refer to the cookbook object.
-
-  describe('Adding recipe to the cookbook', () => {
-    test('should accept recipe name and ingredients and the change should be reflected in the cookbook object', () => {
-      const myCookbook = new Cookbook();
-      const myCookbookCli = new CookbookCli(myCookbook);
-      
-      myCookbookCli.run('add', 'chocolate cookies', ['butter', 'dough', 'chocolate']);
-
-      const expectedRecipe = {'chocolate cookies': ['butter', 'dough', 'chocolate']};
-
-      expect(myCookbook.recipes).toEqual(expectedRecipe);
-    });
-  });
-
-  describe('Deleting recipe from the cookbook', () => {
     test('should accept recipe name and the change should be reflected in the cookbook object', () => {
       const myCookbook = new Cookbook();
       const myCookbookCli = new CookbookCli(myCookbook);
@@ -82,35 +109,18 @@ describe('CookbookCli', () => {
 
       const expectedRecipe = {};
 
-      expect(myCookbook.recipes).toEqual(expectedRecipe);
+      expect(myCookbookCli.cookbook.recipes).toEqual(expectedRecipe);
     });
+
+    test('should accept a recipe name and a suitable message should be returned if the recipe name requested to be deleted does not exist', () => {
+      const myCookbook = new Cookbook();
+      const myCookbookCli = new CookbookCli(myCookbook);
+
+      const message = myCookbookCli.run('remove', 'pancakes');
+      const expectedMessage = `recipe for pancakes doesn't exist in the cookbook`;
+
+      expect(message).toBe(expectedMessage);
+    })
   });
-
-  // stretch goals tests
-  describe('Adding same recipe twice', () => {
-    test('should not accept the same recipe name for the second time, and should display a message to indicate the same.', () => {
-      const myCookbook = new Cookbook();
-      const myCookbookCli = new CookbookCli(myCookbook);
-
-      myCookbookCli.run('add', 'fried rice', ['rice', 'vegetables']);
-
-
-      const message = `recipe for fried rice already exists`;
-
-      expect(myCookbookCli.run('add', 'fried rice', ['rice', 'vegetables'])).toBe(message);
-
-    })
-  })
-
-  describe('Retrieving a recipe that does not exist', () => {
-    test('should accept the recipe name and return a suitable message if the provided recipe name does not exist in the cookbook', () => {
-      const myCookbook = new Cookbook();
-      const myCookbookCli = new CookbookCli(myCookbook);
-
-      const message = `recipe for meatballs doesn't exist in the cookbook. unable to retrieve the ingredients`;
-
-      expect(myCookbookCli.run('get', 'meatballs')).toBe(message);
-    })
-  })
-
 });
+ 
